@@ -969,7 +969,7 @@
                     <p>Pendant que vous stagnez, d'autres prennent votre place sur le marché</p>
                 </div>
                 <div class="problem-card">
-                    <div class="problem-icon">🌪</div>
+                    <div class="problem-icon">🌪️</div>
                     <h3>Vous subissez les crises</h3>
                     <p>Chaque problème vous prend par surprise et vous déstabilise</p>
                 </div>
@@ -1008,7 +1008,7 @@
             </div>
             <div class="hero-visual">
                 <div style="text-align: center;">
-                    <div style="font-size: 15rem; opacity: 0.8;">🏗</div>
+                    <div style="font-size: 15rem; opacity: 0.8;">🏗️</div>
                     <p style="font-size: 1.2rem; margin-top: 20px;">
                         Construisez sur des fondations solides
                     </p>
@@ -1029,7 +1029,7 @@
                     <p>7 chapitres détaillés avec méthodes éprouvées, cas pratiques et plan d'action sur 90 jours</p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">🛠</div>
+                    <div class="benefit-icon">🛠️</div>
                     <h3>15+ Templates Prêts</h3>
                     <p>Business plan, évaluations, recrutement... Tous les outils pour démarrer immédiatement</p>
                 </div>
@@ -1468,7 +1468,7 @@
                 <p><strong>© 2025 Jean AKAKPO - Tous droits réservés</strong></p>
                 <p>Ce site et son contenu sont protégés par le droit d'auteur.</p>
                 <p><strong>"Bâtir pour durer - Le guide de l'entrepreneur visionnaire"</strong> est une marque déposée.</p>
-                <p>Conçu avec ❤ pour les entrepreneurs qui veulent réussir durablement.</p>
+                <p>Conçu avec ❤️ pour les entrepreneurs qui veulent réussir durablement.</p>
                 <p style="margin-top: 15px; font-size: 0.8rem; color: #718096;">
                     Site hébergé de manière sécurisée | Paiements protégés par cryptage SSL | 
                     Conforme RGPD | Politique de confidentialité respectée
@@ -1568,14 +1568,170 @@
         adjustFontsForMobile();
         window.addEventListener('resize', adjustFontsForMobile);
 
-        // Download function
+        // Download function with real PDF download
         function downloadEbook() {
-            // Simulation d'achat
-            alert('🎉 Félicitations ! Votre commande a été validée.\n\n📧 Vous allez recevoir le lien de téléchargement par email dans quelques minutes.\n\n✅ Commencez dès maintenant à bâtir votre entreprise durable !');
+            // Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'download', {
+                    'event_category': 'ebook',
+                    'event_label': 'batir-pour-durer'
+                });
+            }
             
-            // Dans la vraie vie, rediriger vers la page de paiement
-            // window.location.href = 'https://votre-plateforme-paiement.com/ebook-batir-pour-durer';
+            // Show thank you message
+            showThankYouMessage();
+            
+            // Start download after short delay
+            setTimeout(() => {
+                // Replace this URL with your actual PDF file URL
+                const ebookUrl = 'https://github.com/VOTRE-USERNAME/batir-pour-durer-ebook/raw/main/Batir-Pour-Durer-Guide-Complet.pdf';
+                
+                // Method 1: Direct download
+                const link = document.createElement('a');
+                link.href = ebookUrl;
+                link.download = 'Batir-Pour-Durer-Jean-AKAKPO.pdf';
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Method 2: Open in new tab (fallback)
+                setTimeout(() => {
+                    window.open(ebookUrl, '_blank');
+                }, 1000);
+                
+            }, 2000);
         }
+
+        // Show thank you message
+        function showThankYouMessage() {
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(5px);
+            `;
+            
+            // Create thank you modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 40px;
+                border-radius: 20px;
+                text-align: center;
+                color: white;
+                max-width: 500px;
+                margin: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                animation: modalSlideIn 0.5s ease-out;
+            `;
+            
+            modal.innerHTML = `
+                <div style="font-size: 4rem; margin-bottom: 20px;">🎉</div>
+                <h2 style="font-size: 2rem; margin-bottom: 15px; color: #ffd700;">Félicitations !</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 20px; line-height: 1.6;">
+                    Votre ebook <strong>"Bâtir pour durer"</strong> va se télécharger automatiquement dans quelques secondes.
+                </p>
+                <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <p style="font-size: 1rem; margin-bottom: 10px;">📥 <strong>Le téléchargement commence...</strong></p>
+                    <p style="font-size: 0.9rem; color: #e0e0e0;">Si le téléchargement ne démarre pas, nous ouvrirons le fichier dans un nouvel onglet.</p>
+                </div>
+                <p style="font-size: 1rem; margin-bottom: 25px;">
+                    ✅ <strong>Commencez dès maintenant</strong> à appliquer les 7 piliers pour bâtir votre entreprise durable !
+                </p>
+                <button onclick="closeThankYou()" style="
+                    background: #ffd700;
+                    color: #2d3748;
+                    border: none;
+                    padding: 12px 25px;
+                    border-radius: 25px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    Parfait, merci ! 👍
+                </button>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Add animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes modalSlideIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-50px) scale(0.9);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Auto-close after 10 seconds
+            setTimeout(() => {
+                if (document.body.contains(overlay)) {
+                    closeThankYou();
+                }
+            }, 10000);
+            
+            // Store overlay reference for closing
+            window.thankYouOverlay = overlay;
+        }
+
+        // Close thank you modal
+        function closeThankYou() {
+            if (window.thankYouOverlay && document.body.contains(window.thankYouOverlay)) {
+                document.body.removeChild(window.thankYouOverlay);
+                window.thankYouOverlay = null;
+            }
+        }
+
+        // Alternative: Email collection before download
+        function downloadWithEmail() {
+            const email = prompt("Pour recevoir votre ebook et nos mises à jour exclusives, entrez votre email :");
+            
+            if (email && email.includes('@')) {
+                // You can send this email to your server/service
+                console.log('Email collected:', email);
+                
+                // Show success message
+                alert(`✅ Parfait ! Votre ebook sera envoyé à ${email} dans quelques minutes.\n\n📥 Le téléchargement direct va aussi commencer maintenant.`);
+                
+                // Proceed with download
+                downloadEbook();
+            } else if (email !== null) {
+                alert("❌ Email invalide. Le téléchargement va quand même commencer !");
+                downloadEbook();
+            }
+        }
+
+        // Set up all download buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all CTA buttons
+            const downloadButtons = document.querySelectorAll('.cta-button, .mega-button');
+            
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    downloadEbook();
+                });
+            });
+        });
 
         // Add animation on scroll
         const observerOptions = {
